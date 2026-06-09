@@ -59,7 +59,6 @@ export default function QuizPage() {
   const handleAnswer = useCallback((key: string) => {
     const q = questions[currentIdx];
     if (!q) return;
-    if (mode === "exam" && answers[q.id]) return;
     if (mode === "practice" && revealed) return;
     if (mode === "practice" && answers[q.id]) return;
     setAnswers(prev => ({ ...prev, [q.id]: key }));
@@ -266,9 +265,9 @@ export default function QuizPage() {
                   if (!optionText) return null;
                   const optStyle = getOptionStyle(key);
                   const keyStyle = getKeyStyle(key);
-                  const isDisabled = mode === "exam"
-                    ? !!answered
-                    : (!!answered && !revealed) || revealed;
+                  const isDisabled = mode === "practice"
+                    ? (!!answered && !revealed) || revealed
+                    : false;
 
                   return (
                     <motion.button
