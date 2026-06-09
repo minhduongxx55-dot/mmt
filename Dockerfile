@@ -17,4 +17,4 @@ RUN pnpm --filter @workspace/api-server run build
 
 EXPOSE 3000
 
-CMD ["pnpm", "--filter", "@workspace/api-server", "run", "start"]
+CMD ["sh", "-c", "pnpm --filter @workspace/db run push && pnpm --filter @workspace/api-server run start"]
