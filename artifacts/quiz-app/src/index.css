@@ -1,0 +1,393 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --font-sans: var(--app-font-sans);
+  --font-mono: var(--app-font-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --background: 216 28% 7%;
+  --foreground: 210 40% 91%;
+  --border: 217 19% 20%;
+  --input: 217 19% 25%;
+  --ring: 213 93% 67%;
+  --card: 217 25% 11%;
+  --card-foreground: 210 40% 91%;
+  --popover: 217 25% 11%;
+  --popover-foreground: 210 40% 91%;
+  --primary: 213 93% 61%;
+  --primary-foreground: 216 28% 7%;
+  --secondary: 217 19% 17%;
+  --secondary-foreground: 210 40% 78%;
+  --muted: 217 19% 17%;
+  --muted-foreground: 215 14% 55%;
+  --accent: 213 93% 61%;
+  --accent-foreground: 216 28% 7%;
+  --destructive: 0 72% 62%;
+  --destructive-foreground: 210 40% 91%;
+  --app-font-sans: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, monospace;
+  --app-font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  --radius: 0.5rem;
+
+  /* Quiz-specific custom vars */
+  --quiz-bg: #0d1117;
+  --quiz-card: #161b22;
+  --quiz-card-2: #1c2128;
+  --quiz-border: #30363d;
+  --quiz-blue: #388bfd;
+  --quiz-green: #3fb950;
+  --quiz-red: #f85149;
+  --quiz-yellow: #d29922;
+  --quiz-purple: #a371f7;
+  --quiz-cyan: #39c5cf;
+  --quiz-text: #e6edf3;
+  --quiz-muted: #8b949e;
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply antialiased;
+    background-color: var(--quiz-bg);
+    color: var(--quiz-text);
+    font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--quiz-card); }
+::-webkit-scrollbar-thumb { background: var(--quiz-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--quiz-muted); }
+
+/* Selection */
+::selection { background: rgba(56,139,253,0.25); color: var(--quiz-text); }
+
+/* Keyframes */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(56,139,253,0.3); }
+  50% { box-shadow: 0 0 24px rgba(56,139,253,0.6), 0 0 48px rgba(56,139,253,0.2); }
+}
+@keyframes floatUp {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-32px); }
+}
+@keyframes progressFill {
+  from { width: 0%; }
+  to { width: var(--target-width, 100%); }
+}
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.6); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+/* Animation utilities */
+.anim-fade-up { animation: fadeInUp 0.35s ease forwards; }
+.anim-slide-left { animation: slideInLeft 0.3s ease forwards; }
+.anim-scale-in { animation: scaleIn 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+.anim-glow { animation: glowPulse 2s ease-in-out infinite; }
+.anim-count-up { animation: countUp 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+.anim-shake { animation: shake 0.5s ease; }
+
+/* Cursor blink */
+.cursor-blink::after {
+  content: '▋';
+  animation: blink 1s step-end infinite;
+  color: var(--quiz-blue);
+  margin-left: 2px;
+  font-size: 0.9em;
+}
+
+/* Progress bar */
+.progress-track {
+  height: 3px;
+  background: var(--quiz-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--quiz-blue), var(--quiz-cyan));
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Glass card */
+.quiz-card {
+  background: var(--quiz-card);
+  border: 1px solid var(--quiz-border);
+  border-radius: 12px;
+}
+.quiz-card-2 {
+  background: var(--quiz-card-2);
+  border: 1px solid var(--quiz-border);
+  border-radius: 8px;
+}
+
+/* Glow effects */
+.glow-blue { box-shadow: 0 0 0 1px var(--quiz-blue), 0 0 12px rgba(56,139,253,0.3); }
+.glow-green { box-shadow: 0 0 0 1px var(--quiz-green), 0 0 12px rgba(63,185,80,0.3); }
+.glow-red { box-shadow: 0 0 0 1px var(--quiz-red), 0 0 12px rgba(248,81,73,0.3); }
+
+/* Option button states */
+.option-btn {
+  width: 100%;
+  text-align: left;
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 1px solid var(--quiz-border);
+  background: var(--quiz-card-2);
+  color: var(--quiz-text);
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.option-btn:hover:not(:disabled) {
+  border-color: var(--quiz-blue);
+  background: rgba(56,139,253,0.08);
+  transform: translateX(3px);
+}
+.option-btn.selected {
+  border-color: var(--quiz-blue);
+  background: rgba(56,139,253,0.12);
+}
+.option-btn.correct {
+  border-color: var(--quiz-green);
+  background: rgba(63,185,80,0.1);
+}
+.option-btn.wrong {
+  border-color: var(--quiz-red);
+  background: rgba(248,81,73,0.1);
+}
+.option-btn.show-correct {
+  border-color: var(--quiz-green);
+  background: rgba(63,185,80,0.06);
+}
+.option-btn:disabled {
+  cursor: default;
+}
+
+/* Option key badge */
+.option-key {
+  min-width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid var(--quiz-border);
+  background: var(--quiz-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+}
+
+/* Rank badge */
+.rank-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* Terminal-style header */
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--quiz-card);
+  border-bottom: 1px solid var(--quiz-border);
+  border-radius: 12px 12px 0 0;
+}
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Score circle */
+.score-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid;
+  position: relative;
+}
+
+/* Input field */
+.quiz-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--quiz-card-2);
+  border: 1px solid var(--quiz-border);
+  border-radius: 8px;
+  color: var(--quiz-text);
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.quiz-input:focus {
+  border-color: var(--quiz-blue);
+  box-shadow: 0 0 0 3px rgba(56,139,253,0.12);
+}
+.quiz-input::placeholder { color: var(--quiz-muted); }
+
+/* Button */
+.quiz-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  border: 1px solid;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.quiz-btn-primary {
+  background: var(--quiz-blue);
+  border-color: var(--quiz-blue);
+  color: #fff;
+}
+.quiz-btn-primary:hover {
+  background: #4d9eff;
+  border-color: #4d9eff;
+  box-shadow: 0 0 16px rgba(56,139,253,0.4);
+  transform: translateY(-1px);
+}
+.quiz-btn-secondary {
+  background: transparent;
+  border-color: var(--quiz-border);
+  color: var(--quiz-text);
+}
+.quiz-btn-secondary:hover {
+  border-color: var(--quiz-muted);
+  background: rgba(255,255,255,0.04);
+}
+.quiz-btn-danger {
+  background: transparent;
+  border-color: var(--quiz-red);
+  color: var(--quiz-red);
+}
+.quiz-btn-danger:hover {
+  background: rgba(248,81,73,0.1);
+}
+.quiz-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Tag/badge */
+.quiz-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid;
+}
+
+/* Divider */
+.quiz-divider {
+  height: 1px;
+  background: var(--quiz-border);
+  margin: 16px 0;
+}
+
+/* Admin table */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.admin-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--quiz-muted);
+  border-bottom: 1px solid var(--quiz-border);
+}
+.admin-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(48,54,61,0.5);
+  font-size: 0.875rem;
+}
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr:hover td { background: rgba(255,255,255,0.02); }

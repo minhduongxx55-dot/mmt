@@ -1,0 +1,49 @@
+import type { Question } from './types';
+
+  export const topic4: Question[] = [
+    { id: 1, question: `Trong mạng LAN không dây (WLAN), phương tiện truyền dẫn chính là gì?`, options: { A: `Cáp xoắn đôi.`, B: `Cáp quang.`, C: `Sóng vô tuyến.`, D: `Dây cáp đồng trục.` }, answer: 'C' },
+  { id: 2, question: `Thiết bị dùng để kết nối giữa môi trường có dây và môi trường không dây trong mạng cơ sở hạ tầng là gì?`, options: { A: `Switch (Bộ chuyển mạch).`, B: `Hub.`, C: `Access Point (AP).`, D: `NIC (Card mạng).` }, answer: 'C' },
+  { id: 3, question: `Theo chuẩn IEEE 802, tầng liên kết dữ liệu được chia thành hai tầng con nào?`, options: { A: `TCP và IP.`, B: `LLC và MAC.`, C: `Physical và Data Link.`, D: `HTTP và FTP.` }, answer: 'B' },
+  { id: 4, question: `Chuẩn IEEE 802.11b hoạt động ở băng tần nào?`, options: { A: `5 GHz.`, B: `2.4 GHz.`, C: `60 GHz.`, D: `900 MHz.` }, answer: 'B' },
+  { id: 5, question: `Chuẩn 802.11 nào sau đây đạt được tốc độ tối đa lên tới 54 Mbps ở băng tần 5 GHz?`, options: { A: `802.11b.`, B: `802.11g.`, C: `802.11a.`, D: `802.11n.` }, answer: 'C' },
+  { id: 6, question: `Kỹ thuật 'MIMO' được sử dụng để tăng thông lượng và giảm nhiễu trong chuẩn nào?`, options: { A: `802.11a.`, B: `802.11b.`, C: `802.11n.`, D: `Bluetooth.` }, answer: 'C' },
+  { id: 7, question: `Công nghệ Bluetooth là việc triển khai giao thức được xác định bởi tiêu chuẩn IEEE nào?`, options: { A: `IEEE 802.3.`, B: `IEEE 802.11.`, C: `IEEE 802.15.`, D: `IEEE 802.16.` }, answer: 'C' },
+  { id: 8, question: `Trong kiến trúc Bluetooth, một mạng có thể có tối đa tám trạm (1 chính và 7 phụ) được gọi là gì?`, options: { A: `Scatternet.`, B: `Piconet.`, C: `Cell.`, D: `BSS.` }, answer: 'B' },
+  { id: 9, question: `Một piconet có thể có tối đa mấy trạm:`, options: { A: `1 chính và 7 phụ`, B: `1 chính và 6 phụ`, C: `2 chính và 6 phụ`, D: `1 chính và 8 phụ` }, answer: 'A' },
+  { id: 10, question: `So với WiFi, WiMAX cung cấp phạm vi phủ sóng khoảng bao nhiêu?`, options: { A: `0,057 dặm.`, B: `10 dặm.`, C: `6 dặm.`, D: `100 dặm` }, answer: 'C' },
+  { id: 11, question: `Trong IP di động, địa chỉ cố định liên kết host với mạng nhà của nó được gọi là gì?`, options: { A: `Địa chỉ giám sát (Care-of address).`, B: `Địa chỉ nhà (Home address).`, C: `Địa chỉ MAC.`, D: `Địa chỉ Proxy.` }, answer: 'B' },
+  { id: 12, question: `Khi một host di chuyển sang mạng ngoài, nó sử dụng địa chỉ tạm thời nào?`, options: { A: `Địa chỉ gốc.`, B: `Địa chỉ giám sát (Care-of address).`, C: `Địa chỉ tĩnh.`, D: `Địa chỉ cổng.` }, answer: 'B' },
+  { id: 13, question: `Trong mạng điện thoại tế bào, trung tâm chịu trách nhiệm kết nối cuộc gọi và ghi thông tin thanh toán là gì?`, options: { A: `Base Station (BS).`, B: `Mobile Station (MS).`, C: `Mobile Switching Center (MSC).`, D: `PSTN.` }, answer: 'C' },
+  { id: 14, question: `Trong mạng điện thoại tế bào, vùng dịch vụ di động được chia thành các vùng nhỏ chứa một ăng-ten và được điều khiển bởi bộ phận nào?`, options: { A: `Base Station (BS).`, B: `Mobile Station (MS).`, C: `Mobile Switching Center (MSC).`, D: `PSTN.` }, answer: 'A' },
+  { id: 15, question: `Vệ tinh ở quỹ đạo Trái đất địa tĩnh (GEO) nằm ở độ cao cách bề mặt Trái đất khoảng bao nhiêu?`, options: { A: `750 km.`, B: `15.000 km.`, C: `35.786 km.`, D: `5.000 km.` }, answer: 'C' },
+  { id: 16, question: `Vệ tinh LEO nằm ở độ cao cách bề mặt Trái đất khoảng bao nhiêu?`, options: { A: `35.786 km.`, B: `15.000 km.`, C: `500 đến 2.000 km.`, D: `5.000 km.` }, answer: 'C' },
+  { id: 17, question: `Truyền thông từ Trái đất đến vệ tinh được gọi là gì?`, options: { A: `Downlink.`, B: `Uplink.`, C: `ISL.`, D: `GWL.` }, answer: 'B' },
+  { id: 18, question: `Truyền thông từ vệ tinh đến trái đất được gọi là gì?`, options: { A: `Downlink.`, B: `Uplink.`, C: `ISL.`, D: `GWL.` }, answer: 'A' },
+  { id: 19, question: `Các băng tần trong truyền thông vệ tinh ?`, options: { A: `L, S, C, Ku, Ka`, B: `L, S, U, Kc, Ka`, C: `S, B, C, Ku, Ka`, D: `S, L, C, Ku, Ks` }, answer: 'A' },
+  { id: 20, question: `Khu vực cụ thể trên Trái đất mà tín hiệu từ vệ tinh hướng đến được gọi là gì?`, options: { A: `Quỹ đạo.`, B: `Dấu chân (Footprint).`, C: `Vành đai Van Allen.`, D: `Trạm mặt đất.` }, answer: 'B' },
+  { id: 21, question: `Kết nối qua Bluetooth nếu kênh đầu tiên sử dụng tần số sóng mang 2402 MHz thì kênh thứ 5 dùng tần số nào?`, options: { A: `2405`, B: `2406`, C: `2407`, D: `2410` }, answer: 'B' },
+  { id: 22, question: `Kết nối qua Bluetooth sử dụng kỹ thuật điều chế?`, options: { A: `FSK`, B: `GFSK`, C: `PSK`, D: `ASK` }, answer: 'B' },
+  { id: 23, question: `Tại sao các vệ tinh thường tránh đặt quỹ đạo trong vành đai Van Allen?`, options: { A: `Vì không có ánh sáng mặt trời.`, B: `Vì thiết bị sẽ bị phá hủy bởi các hạt tích điện.`, C: `Vì độ trễ tín hiệu quá lớn.`, D: `Vì không thể duy trì vận tốc.` }, answer: 'B' },
+  { id: 24, question: `Hệ thống định vị GPS sử dụng 24 vệ tinh trên mấy quỹ đạo?`, options: { A: `6 quỹ đạo`, B: `4 quỹ đạo`, C: `12 quỹ đạo`, D: `8 quỹ đạo` }, answer: 'A' },
+  { id: 25, question: `Hệ thống Định vị Toàn cầu (GPS) sử dụng bao nhiêu vệ tinh trên quỹ đạo?`, options: { A: `12 vệ tinh.`, B: `66 vệ tinh.`, C: `24 vệ tinh.`, D: `48 vệ tinh.` }, answer: 'C' },
+  { id: 26, question: `Cần tối thiểu bao nhiêu vệ tinh trên quỹ đạo địa tĩnh (GEO) để cung cấp khả năng truyền dẫn toàn cầu?`, options: { A: `1 vệ tinh.`, B: `2 vệ tinh.`, C: `3 vệ tinh.`, D: `24 vệ tinh.` }, answer: 'C' },
+  { id: 27, question: `Hệ thống định vị toàn cầu GPS là vệ tinh MEO nằm ở độ cao cách bề mặt Trái đất khoảng bao nhiêu?`, options: { A: `35.786 km.`, B: `18.000 km.`, C: `500 đến 2.000 km.`, D: `5.000 km.` }, answer: 'B' },
+  { id: 28, question: `Bluetooth sử dụng phương pháp trải phổ nào ở lớp vật lý để tránh nhiễu từ các thiết bị khác?`, options: { A: `DSSS.`, B: `FHSS`, C: `OFDM.`, D: `CDMA.` }, answer: 'B' },
+  { id: 29, question: `Bluetooth nhảy tần bao nhiêu lần mỗi giây?`, options: { A: `1600`, B: `1500`, C: `6250`, D: `7250` }, answer: 'A' },
+  { id: 30, question: `Bluetooth sử dụng băng tần nào?`, options: { A: `ISM 2,4 GHz được chia thành 79 kênh, mỗi kênh 1 MHz.`, B: `ISM 5 GHz được chia thành 80 kênh, mỗi kênh 1 MHz.`, C: `GSM 2,4 GHz được chia thành 79 kênh, mỗi kênh 2 MHz.`, D: `GSM 5 GHz được chia thành 80 kênh, mỗi kênh 2 MHz.` }, answer: 'A' },
+  { id: 31, question: `Tại sao các cell lân cận trong mạng tế bào thường không thể sử dụng cùng một bộ tần số?`, options: { A: `Vì làm tăng chi phí.`, B: `Vì có thể gây nhiễu cho người dùng.`, C: `Vì làm giảm tốc độ di chuyển.`, D: `Vì giới hạn của ăng-ten.` }, answer: 'B' },
+  { id: 32, question: `Trong hệ thống mạng di động tế bào, mục đích chính của việc áp dụng nguyên lý tái sử dụng tần số là gì?`, options: { A: `Để cho phép điện thoại di động có thể kết nối trực tiếp với vệ tinh khi di chuyển qua các vùng khác nhau.`, B: `Để các ô (cell) liền kề có thể sử dụng chung một bộ tần số nhằm tiết kiệm tài nguyên.`, C: `Để tăng dung lượng hệ thống bằng cách sử dụng lại các tần số ở những khoảng cách an toàn.`, D: `Để mở rộng kích thước địa lý của mỗi ô (cell) lên mức tối đa.` }, answer: 'C' },
+  { id: 33, question: `Ưu điểm của vệ tinh nhân tạo so với vệ tinh tự nhiên trong truyền thông là gì? A. Khoảng cách gần trái đất hơn.`, options: { A: ``, B: `Có thể lắp đặt thiết bị điện tử để tái tạo tín hiệu.`, C: `Không gây độ trễ truyền dẫn.`, D: `Có kích thước lớn hơn.` }, answer: 'B' },
+  { id: 34, question: `Tại sao chuẩn IEEE 802.11a lại có khoảng cách truyền ngắn hơn và yêu cầu nhiều năng lượng hơn so với chuẩn 802.11b?`, options: { A: `Do 802.11a sử dụng kỹ thuật trải phổ chuỗi trực tiếp (DSSS).`, B: `Vì 802.11a hoạt động ở băng tần cao hơn (5 GHz) so với băng tần 2.4 GHz của 802.11b.`, C: `Do 802.11a sử dụng kỹ thuật điều chế QPSK thay vì 64 QAM.`, D: `Do chuẩn 802.11a không hỗ trợ kỹ thuật sửa lỗi COFDM.` }, answer: 'B' },
+  { id: 35, question: `Trong kiến trúc Scatternet của Bluetooth, một trạm có thể đóng vai trò như thế nào để chuyển tiếp dữ liệu giữa các Piconet?`, options: { A: `Phải là trạm chính (Primary) trong cả hai Piconet cùng lúc.`, B: `Phải là trạm phụ (Secondary) đang ở trạng thái đỗ (parked state).`, C: `Là trạm phụ trong Piconet này nhưng đồng thời là trạm chính trong Piconet khác.`, D: `Phải sử dụng liên kết giữa các vệ tinh (ISL) để kết nối.` }, answer: 'C' },
+  { id: 36, question: `Đặc điểm nào khiến hệ thống vệ tinh Teledesic được mệnh danh là "Internet trên bầu trời"?`, options: { A: `Nó sử dụng 24 vệ tinh trên quỹ đạo MEO để cung cấp vị trí chính xác toàn cầu.`, B: `Nó là hệ thống vệ tinh địa tĩnh (GEO) duy nhất có khả năng truyền dẫn băng thông rộng.`, C: `Nó là mạng lưới vệ tinh LEO băng thông rộng cung cấp dịch vụ tương tự cáp quang với tỷ lệ lỗi thấp và độ trễ thấp cho người dùng toàn thế giới.`, D: `Nó hoạt động ở băng tần dưới 1 GHz để nhắn tin tốc độ dữ liệu thấp.` }, answer: 'C' },
+  { id: 37, question: `Sự khác biệt chính trong cơ chế truy cập môi trường (MAC) giữa WiFi và WiMAX là gì?`, options: { A: `WiFi sử dụng lập lịch,  trong khi WiMAX sử dụng truy cập cạnh tranh (contention).`, B: `WiFi yêu cầu trạm thuê bao cạnh tranh cho mọi gói tin, còn WiMAX sử dụng thuật toán lập lịch giúp thuê bao chỉ cần cạnh tranh một lần để vào mạng, sau đó được phân bổ khe truy cập.`, C: `WiMAX sử dụng kiến trúc piconet để quản lý truy cập, còn WiFi sử dụng trạm gốc`, D: `WiMAX không hỗ trợ tính di động như WiFi nên cơ chế MAC đơn giản hơn nhiều.` }, answer: 'B' }
+  ];
+
+  export const topic4Meta = {
+    id: 'topic4',
+    name: 'Chủ đề 4 – CLO1',
+    description: 'Tầng vật lý & liên kết dữ liệu: cáp, kiểm lỗi, Ethernet',
+    totalQuestions: 37,
+  };
+  
