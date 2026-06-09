@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
 
-const staticDir = path.join(process.cwd(), "artifacts/quiz-app/dist/public");
+const staticDir = path.join(process.cwd(), "../../artifacts/quiz-app/dist/public");
 app.use(express.static(staticDir));
 app.get("*path", (_req, res) => {
   res.sendFile(path.join(staticDir, "index.html"));
