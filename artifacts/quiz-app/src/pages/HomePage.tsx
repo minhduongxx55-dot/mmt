@@ -401,11 +401,6 @@ export default function HomePage() {
           >
             <Trophy size={13} /> Bảng xếp hạng
           </button>
-          <span>·</span>
-          <span>
-            <Shield size={13} style={{ display: "inline", marginRight: 4 }} />
-            Admin: nhập <code style={{ color: "var(--quiz-blue)", fontFamily: "monospace" }}>admindeptrai</code>
-          </span>
         </motion.div>
       </div>
     </div>
