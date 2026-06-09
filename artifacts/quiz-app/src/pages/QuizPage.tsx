@@ -60,7 +60,6 @@ export default function QuizPage() {
     const q = questions[currentIdx];
     if (!q) return;
     if (mode === "practice" && revealed) return;
-    if (mode === "practice" && answers[q.id]) return;
     setAnswers(prev => ({ ...prev, [q.id]: key }));
     setRevealed(false);
   }, [questions, currentIdx, answers, mode, revealed]);
@@ -265,9 +264,7 @@ export default function QuizPage() {
                   if (!optionText) return null;
                   const optStyle = getOptionStyle(key);
                   const keyStyle = getKeyStyle(key);
-                  const isDisabled = mode === "practice"
-                    ? (!!answered && !revealed) || revealed
-                    : false;
+                  const isDisabled = mode === "practice" ? revealed : false;
 
                   return (
                     <motion.button
