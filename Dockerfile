@@ -11,6 +11,8 @@ COPY . .
 
 RUN pnpm install --frozen-lockfile
 
+RUN PORT=3000 BASE_PATH=/ pnpm --filter @workspace/quiz-app run build
+
 RUN pnpm --filter @workspace/api-server run build
 
 EXPOSE 3000

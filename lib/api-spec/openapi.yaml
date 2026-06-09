@@ -1,22 +1,24 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Quiz App API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: rankings
+    description: Leaderboard rankings
+  - name: questions
+    description: Question management
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +26,113 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /rankings:
+    get:
+      operationId: getRankings
+      tags: [rankings]
+      summary: Get top rankings
+      parameters:
+        - name: topicId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Rankings list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ranking"
+    post:
+      operationId: submitResult
+      tags: [rankings]
+      summary: Submit quiz result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RankingInput"
+      responses:
+        "201":
+          description: Result submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ranking"
+  /questions:
+    get:
+      operationId: getQuestionOverrides
+      tags: [questions]
+      summary: Get admin question overrides
+      responses:
+        "200":
+          description: Question overrides
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/QuestionOverride"
+  /questions/{topicId}/{questionId}:
+    put:
+      operationId: updateQuestion
+      tags: [questions]
+      summary: Admin update question (admin only)
+      parameters:
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuestionUpdate"
+      responses:
+        "200":
+          description: Question updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuestionOverride"
+    delete:
+      operationId: deleteQuestionOverride
+      tags: [questions]
+      summary: Delete question override (restore default)
+      parameters:
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Override deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +142,113 @@ components:
           type: string
       required:
         - status
-
+    Ranking:
+      type: object
+      properties:
+        id:
+          type: integer
+        playerName:
+          type: string
+        topicId:
+          type: string
+        topicName:
+          type: string
+        score:
+          type: number
+        totalQuestions:
+          type: integer
+        correctAnswers:
+          type: integer
+        createdAt:
+          type: string
+      required:
+        - id
+        - playerName
+        - topicId
+        - topicName
+        - score
+        - totalQuestions
+        - correctAnswers
+        - createdAt
+    RankingInput:
+      type: object
+      properties:
+        playerName:
+          type: string
+        topicId:
+          type: string
+        topicName:
+          type: string
+        score:
+          type: number
+        totalQuestions:
+          type: integer
+        correctAnswers:
+          type: integer
+      required:
+        - playerName
+        - topicId
+        - topicName
+        - score
+        - totalQuestions
+        - correctAnswers
+    QuestionOverride:
+      type: object
+      properties:
+        id:
+          type: integer
+        topicId:
+          type: string
+        questionId:
+          type: integer
+        questionText:
+          type: string
+        optionA:
+          type: string
+        optionB:
+          type: string
+        optionC:
+          type: string
+        optionD:
+          type: string
+        answer:
+          type: string
+      required:
+        - id
+        - topicId
+        - questionId
+        - questionText
+        - optionA
+        - optionB
+        - optionC
+        - optionD
+        - answer
+    QuestionUpdate:
+      type: object
+      properties:
+        questionText:
+          type: string
+        optionA:
+          type: string
+        optionB:
+          type: string
+        optionC:
+          type: string
+        optionD:
+          type: string
+        answer:
+          type: string
+      required:
+        - questionText
+        - optionA
+        - optionB
+        - optionC
+        - optionD
+        - answer
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
