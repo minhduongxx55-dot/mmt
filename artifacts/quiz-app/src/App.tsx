@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import HomePage from "@/pages/HomePage";
 import QuizPage from "@/pages/QuizPage";
 import ResultsPage from "@/pages/ResultsPage";
+import ReviewPage from "@/pages/ReviewPage";
 import LeaderboardPage from "@/pages/LeaderboardPage";
 import AdminPage from "@/pages/AdminPage";
 import NotFound from "@/pages/not-found";
@@ -20,6 +21,7 @@ function Router() {
       <Route path="/quiz/:topicId/:mode" component={QuizPage} />
       <Route path="/quiz/:topicId" component={QuizPage} />
       <Route path="/results" component={ResultsPage} />
+      <Route path="/review" component={ReviewPage} />
       <Route path="/leaderboard" component={LeaderboardPage} />
       <Route path="/admin" component={AdminPage} />
       <Route component={NotFound} />

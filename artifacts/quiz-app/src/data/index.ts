@@ -57,7 +57,7 @@ export function buildMockExam(): Question[] {
     if (!topic) continue;
     const valid = topic.questions.filter(q => q.answer !== null);
     const shuffled = shuffleArray(valid);
-    result.push(...shuffled.slice(0, count));
+    result.push(...shuffled.slice(0, count).map(q => ({ ...q, topicId })));
   }
   return shuffleArray(result);
 }

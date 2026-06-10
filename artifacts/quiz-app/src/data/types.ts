@@ -4,6 +4,7 @@ export interface Question {
   options: { A: string; B: string; C: string; D: string };
   answer: 'A' | 'B' | 'C' | 'D' | null;
   image?: string;
+  topicId?: string;
 }
 
 export interface TopicMeta {

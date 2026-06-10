@@ -1,9 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { useLocation } from "wouter";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Question } from "@/data";
 import { useSubmitResult } from "@workspace/api-client-react";
-import { Trophy, CheckCircle, XCircle, ChevronDown, ChevronUp, RotateCcw, Home, Share2 } from "lucide-react";
+import { Trophy, CheckCircle, RotateCcw, Home, BookOpen } from "lucide-react";
 
 interface ResultState {
   playerName: string;
@@ -20,7 +20,6 @@ interface ResultState {
 export default function ResultsPage() {
   const [, navigate] = useLocation();
   const [state, setState] = useState<ResultState | null>(null);
-  const [expandedQ, setExpandedQ] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const submitResult = useSubmitResult();
   const hasSubmitted = useRef(false);
@@ -61,7 +60,6 @@ export default function ResultsPage() {
   const isPractice = mode === "practice";
   const total = questions.length;
   const wrongAnswers = total - correctAnswers;
-  const percentage = Math.round((correctAnswers / total) * 100);
 
   const getScoreColor = () => {
     if (score >= 8) return "var(--quiz-green)";
@@ -82,8 +80,6 @@ export default function ResultsPage() {
     const sec = s % 60;
     return `${m}p ${sec}s`;
   };
-
-  const optionKeys: Array<"A" | "B" | "C" | "D"> = ["A", "B", "C", "D"];
 
   return (
     <div className="min-h-screen" style={{ background: "var(--quiz-bg)" }}>
@@ -196,165 +192,98 @@ export default function ResultsPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="flex gap-3 mb-6 flex-wrap"
+          className="flex flex-col gap-3 mb-6"
         >
-          <button className="quiz-btn quiz-btn-secondary flex-1" onClick={() => navigate("/")}>
-            <Home size={15} />
-            Trang chủ
-          </button>
+          {/* Primary: review button */}
           <button
-            className="quiz-btn quiz-btn-primary flex-1"
-            onClick={() => navigate(topicId === "mock" ? "/quiz/mock/exam" : `/quiz/${topicId}/${mode ?? "exam"}`)}
+            className="quiz-btn quiz-btn-primary w-full"
+            style={{ padding: "12px 16px", fontSize: "0.9rem" }}
+            onClick={() => {
+              localStorage.setItem("quizReview", JSON.stringify(state));
+              navigate("/review");
+            }}
           >
-            <RotateCcw size={15} />
-            Làm lại
+            <BookOpen size={16} />
+            Xem lại đáp án chi tiết
           </button>
-          <button className="quiz-btn quiz-btn-secondary flex-1" onClick={() => navigate("/leaderboard")}>
-            <Trophy size={15} />
-            Xếp hạng
-          </button>
+
+          {/* Secondary actions */}
+          <div className="flex gap-3">
+            <button className="quiz-btn quiz-btn-secondary flex-1" onClick={() => navigate("/")}>
+              <Home size={15} />
+              Trang chủ
+            </button>
+            <button
+              className="quiz-btn quiz-btn-secondary flex-1"
+              onClick={() => navigate(topicId === "mock" ? "/quiz/mock/exam" : `/quiz/${topicId}/${mode ?? "exam"}`)}
+            >
+              <RotateCcw size={15} />
+              Làm lại
+            </button>
+            <button className="quiz-btn quiz-btn-secondary flex-1" onClick={() => navigate("/leaderboard")}>
+              <Trophy size={15} />
+              Xếp hạng
+            </button>
+          </div>
         </motion.div>
 
-        {/* Review section */}
+        {/* Quick summary grid */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.7 }}
         >
           <h3
-            className="font-bold mb-4 flex items-center gap-2"
-            style={{ color: "var(--quiz-text)", fontSize: "1rem" }}
+            className="font-bold mb-3 flex items-center gap-2"
+            style={{ color: "var(--quiz-text)", fontSize: "0.95rem" }}
           >
             <span style={{ color: "var(--quiz-blue)" }}>▌</span>
-            Xem lại đáp án
+            Tổng quan câu hỏi
           </h3>
-          <div className="flex flex-col gap-3">
-            {questions.map((q, i) => {
-              const userAns = answers[q.id];
-              const isCorrect = userAns === q.answer;
-              const isExpanded = expandedQ === q.id;
-
-              return (
-                <motion.div
-                  key={q.id}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.7 + i * 0.04 }}
-                  className="quiz-card overflow-hidden"
-                  style={{
-                    borderColor: isCorrect ? "rgba(63,185,80,0.3)" : "rgba(248,81,73,0.3)",
-                  }}
-                >
+          <div className="quiz-card p-3">
+            <div className="flex flex-wrap gap-2">
+              {questions.map((q, i) => {
+                const isCorrect = answers[q.id] === q.answer;
+                const noAns = !answers[q.id];
+                return (
                   <button
-                    onClick={() => setExpandedQ(isExpanded ? null : q.id)}
-                    className="w-full text-left p-4 flex items-start gap-3"
-                    style={{ background: "transparent", border: "none", cursor: "pointer", color: "inherit", fontFamily: "inherit", width: "100%" }}
+                    key={q.id}
+                    title={`Câu ${i + 1}: ${isCorrect ? "Đúng" : noAns ? "Bỏ qua" : "Sai"}`}
+                    onClick={() => {
+                      localStorage.setItem("quizReview", JSON.stringify(state));
+                      navigate("/review");
+                    }}
+                    style={{
+                      width: 36,
+                      height: 36,
+                      borderRadius: 6,
+                      border: "none",
+                      cursor: "pointer",
+                      fontSize: "0.72rem",
+                      fontWeight: 700,
+                      background: noAns
+                        ? "rgba(255,255,255,0.06)"
+                        : isCorrect
+                        ? "rgba(63,185,80,0.2)"
+                        : "rgba(248,81,73,0.2)",
+                      color: noAns
+                        ? "var(--quiz-muted)"
+                        : isCorrect
+                        ? "var(--quiz-green)"
+                        : "var(--quiz-red)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
                   >
-                    <div className="flex-shrink-0 mt-0.5">
-                      {isCorrect ? (
-                        <CheckCircle size={18} style={{ color: "var(--quiz-green)" }} />
-                      ) : (
-                        <XCircle size={18} style={{ color: "var(--quiz-red)" }} />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div style={{ fontSize: "0.8rem", color: "var(--quiz-muted)", marginBottom: 4 }}>
-                        Câu {i + 1}
-                        {!isCorrect && (
-                          <span style={{ color: "var(--quiz-red)", marginLeft: 8 }}>
-                            Bạn chọn: <strong>{userAns || "—"}</strong> · Đúng: <strong style={{ color: "var(--quiz-green)" }}>{q.answer}</strong>
-                          </span>
-                        )}
-                        {isCorrect && (
-                          <span style={{ color: "var(--quiz-green)", marginLeft: 8 }}>
-                            Đúng: <strong>{q.answer}</strong>
-                          </span>
-                        )}
-                      </div>
-                      <p style={{ fontSize: "0.875rem", lineHeight: 1.5 }} className="line-clamp-2">
-                        {q.question}
-                      </p>
-                    </div>
-                    {isExpanded ? (
-                      <ChevronUp size={16} style={{ color: "var(--quiz-muted)", flexShrink: 0 }} />
-                    ) : (
-                      <ChevronDown size={16} style={{ color: "var(--quiz-muted)", flexShrink: 0 }} />
-                    )}
+                    {i + 1}
                   </button>
-
-                  <AnimatePresence>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        style={{ overflow: "hidden", borderTop: "1px solid var(--quiz-border)" }}
-                      >
-                        <div className="p-4 flex flex-col gap-2">
-                          {q.image && (
-                            <div className="mb-3 flex justify-center">
-                              <img
-                                src={q.image}
-                                alt={`Hình vẽ câu ${i + 1}`}
-                                style={{
-                                  maxWidth: "100%",
-                                  maxHeight: 240,
-                                  borderRadius: 6,
-                                  border: "1px solid var(--quiz-border)",
-                                  background: "#fff",
-                                  padding: 6,
-                                  objectFit: "contain",
-                                }}
-                              />
-                            </div>
-                          )}
-                          {optionKeys.map(key => {
-                            const optText = q.options[key];
-                            if (!optText) return null;
-                            const isAnswer = key === q.answer;
-                            const isUserChoice = key === userAns;
-
-                            let style: React.CSSProperties = {
-                              borderColor: "var(--quiz-border)",
-                              background: "transparent",
-                              color: "var(--quiz-muted)",
-                            };
-                            if (isAnswer) {
-                              style = { borderColor: "var(--quiz-green)", background: "rgba(63,185,80,0.08)", color: "var(--quiz-text)" };
-                            } else if (isUserChoice && !isAnswer) {
-                              style = { borderColor: "var(--quiz-red)", background: "rgba(248,81,73,0.08)", color: "var(--quiz-text)" };
-                            }
-
-                            return (
-                              <div
-                                key={key}
-                                className="flex items-start gap-2.5 p-2.5 rounded-lg"
-                                style={{ border: "1px solid", ...style, fontSize: "0.83rem" }}
-                              >
-                                <span
-                                  className="flex-shrink-0 flex items-center justify-center rounded font-bold text-xs"
-                                  style={{
-                                    width: 22, height: 22,
-                                    background: isAnswer ? "var(--quiz-green)" : isUserChoice ? "var(--quiz-red)" : "var(--quiz-card)",
-                                    color: isAnswer || isUserChoice ? "#fff" : "var(--quiz-muted)",
-                                  }}
-                                >
-                                  {key}
-                                </span>
-                                <span>{optText}</span>
-                                {isAnswer && <CheckCircle size={13} style={{ color: "var(--quiz-green)", flexShrink: 0, marginLeft: "auto" }} />}
-                                {isUserChoice && !isAnswer && <XCircle size={13} style={{ color: "var(--quiz-red)", flexShrink: 0, marginLeft: "auto" }} />}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
+                );
+              })}
+            </div>
+            <p style={{ color: "var(--quiz-muted)", fontSize: "0.74rem", marginTop: 12, textAlign: "center" }}>
+              Nhấn vào ô bất kỳ để xem lại đáp án chi tiết
+            </p>
           </div>
         </motion.div>
       </div>
