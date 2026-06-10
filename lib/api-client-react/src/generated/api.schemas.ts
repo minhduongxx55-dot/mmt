@@ -17,6 +17,7 @@ export interface Ranking {
   score: number;
   totalQuestions: number;
   correctAnswers: number;
+  timeElapsed?: number;
   createdAt: string;
 }
 
@@ -27,6 +28,7 @@ export interface RankingInput {
   score: number;
   totalQuestions: number;
   correctAnswers: number;
+  timeElapsed?: number;
 }
 
 export interface QuestionOverride {

@@ -159,6 +159,8 @@ components:
           type: integer
         correctAnswers:
           type: integer
+        timeElapsed:
+          type: integer
         createdAt:
           type: string
       required:
@@ -184,6 +186,8 @@ components:
         totalQuestions:
           type: integer
         correctAnswers:
+          type: integer
+        timeElapsed:
           type: integer
       required:
         - playerName

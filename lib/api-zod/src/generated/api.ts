@@ -32,6 +32,7 @@ export const GetRankingsResponseItem = zod.object({
   "score": zod.number(),
   "totalQuestions": zod.number(),
   "correctAnswers": zod.number(),
+  "timeElapsed": zod.number().optional(),
   "createdAt": zod.string()
 })
 export const GetRankingsResponse = zod.array(GetRankingsResponseItem)
@@ -46,7 +47,8 @@ export const SubmitResultBody = zod.object({
   "topicName": zod.string(),
   "score": zod.number(),
   "totalQuestions": zod.number(),
-  "correctAnswers": zod.number()
+  "correctAnswers": zod.number(),
+  "timeElapsed": zod.number().optional()
 })
 
 

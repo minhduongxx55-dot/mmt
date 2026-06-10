@@ -10,6 +10,7 @@ export const rankingsTable = pgTable("rankings", {
   score: real("score").notNull(),
   totalQuestions: integer("total_questions").notNull(),
   correctAnswers: integer("correct_answers").notNull(),
+  timeElapsed: integer("time_elapsed"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
