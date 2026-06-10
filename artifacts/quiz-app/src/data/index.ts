@@ -59,5 +59,5 @@ export function buildMockExam(): Question[] {
     const shuffled = shuffleArray(valid);
     result.push(...shuffled.slice(0, count).map(q => ({ ...q, topicId })));
   }
-  return shuffleArray(result);
+  return shuffleArray(result).map((q, i) => ({ ...q, id: i + 1 }));
 }
