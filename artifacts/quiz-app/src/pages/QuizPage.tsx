@@ -1,18 +1,19 @@
 import { useState, useEffect, useCallback } from "react";
 import { useLocation, useParams } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { getTopicById, shuffleAllQuestions } from "@/data";
+import { getTopicById, shuffleAllQuestions, buildMockExam } from "@/data";
 import type { Question } from "@/data";
 import { useGetQuestionOverrides } from "@workspace/api-client-react";
-import { ChevronRight, ChevronLeft, Flag, Clock, X, CheckCircle, XCircle, GraduationCap } from "lucide-react";
+import { ChevronRight, ChevronLeft, Flag, Clock, X, CheckCircle, XCircle, GraduationCap, FileText } from "lucide-react";
 
 export default function QuizPage() {
   const { topicId, mode: modeParam } = useParams<{ topicId: string; mode?: string }>();
   const [, navigate] = useLocation();
   const playerName = localStorage.getItem("playerName") || "Anonymous";
+  const isMock = topicId === "mock";
   const mode: "exam" | "practice" = modeParam === "practice" ? "practice" : "exam";
 
-  const topic = getTopicById(topicId || "");
+  const topic = isMock ? null : getTopicById(topicId || "");
   const { data: overrides } = useGetQuestionOverrides();
 
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -24,6 +25,11 @@ export default function QuizPage() {
   const [quizStarted, setQuizStarted] = useState(false);
 
   useEffect(() => {
+    if (isMock) {
+      setQuestions(buildMockExam());
+      setQuizStarted(true);
+      return;
+    }
     if (!topic) { navigate("/"); return; }
     let qs = topic.questions;
     if (overrides && overrides.length > 0) {
@@ -42,7 +48,7 @@ export default function QuizPage() {
     }
     setQuestions(shuffleAllQuestions(qs));
     setQuizStarted(true);
-  }, [topic, overrides, topicId]);
+  }, [topic, overrides, topicId, isMock]);
 
   useEffect(() => {
     if (!quizStarted) return;
@@ -78,14 +84,15 @@ export default function QuizPage() {
   };
 
   const handleSubmit = () => {
-    if (!topic || questions.length === 0) return;
+    if (questions.length === 0) return;
+    if (!isMock && !topic) return;
     const correctAnswers = questions.filter(q => answers[q.id] === q.answer).length;
     const score = Number(((correctAnswers / questions.length) * 10).toFixed(1));
 
     localStorage.setItem("quizResult", JSON.stringify({
       playerName,
-      topicId: topic.id,
-      topicName: topic.name,
+      topicId: isMock ? "mock" : topic!.id,
+      topicName: isMock ? "Đề tổng hợp 40 câu" : topic!.name,
       questions,
       answers,
       score,
@@ -104,7 +111,7 @@ export default function QuizPage() {
     if (currentIdx > 0) setCurrentIdx(i => i - 1);
   };
 
-  if (!topic) return null;
+  if (!isMock && !topic) return null;
   if (questions.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: "var(--quiz-bg)" }}>
@@ -181,7 +188,7 @@ export default function QuizPage() {
           <div className="flex-1">
             <div style={{ color: "var(--quiz-muted)", fontSize: "0.75rem", marginBottom: 4 }}>
               <span style={{ color: mode === "practice" ? "var(--quiz-green)" : "var(--quiz-blue)" }}>●</span>{" "}
-              {topic.name} — Câu {currentIdx + 1}/{questions.length}
+              {isMock ? "Đề tổng hợp 40 câu" : topic!.name} — Câu {currentIdx + 1}/{questions.length}
               {mode === "practice" && (
                 <span
                   className="ml-2 quiz-tag"

@@ -20,6 +20,13 @@ export default function LeaderboardPage() {
     topic4: "var(--quiz-yellow)",
     topic5: "var(--quiz-green)",
     topic6: "var(--quiz-red)",
+    mock: "var(--quiz-orange, #f97316)",
+  };
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}p${s.toString().padStart(2, "0")}s`;
   };
 
   const getRankIcon = (rank: number) => {
@@ -120,6 +127,19 @@ export default function LeaderboardPage() {
               {t.name.split("–")[0].trim()}
             </button>
           ))}
+          <button
+            onClick={() => setFilterTopic("mock")}
+            className="quiz-btn"
+            style={{
+              fontSize: "0.78rem",
+              padding: "6px 14px",
+              background: filterTopic === "mock" ? "rgba(249,115,22,0.2)" : "transparent",
+              borderColor: filterTopic === "mock" ? "#f97316" : "var(--quiz-border)",
+              color: filterTopic === "mock" ? "#f97316" : "var(--quiz-muted)",
+            }}
+          >
+            🎯 Đề tổng hợp
+          </button>
         </motion.div>
 
         {/* Rankings table */}
@@ -205,7 +225,14 @@ export default function LeaderboardPage() {
                         </span>
                       </div>
                       <div style={{ color: "var(--quiz-muted)", fontSize: "0.7rem", marginTop: 2 }}>
-                        {entry.correctAnswers}/{entry.totalQuestions} đúng · {formatDate(entry.createdAt)}
+                        {entry.correctAnswers}/{entry.totalQuestions} đúng
+                        {entry.timeElapsed != null && (
+                          <span style={{ color: "var(--quiz-yellow)", marginLeft: 6 }}>
+                            <Clock size={10} style={{ display: "inline", marginRight: 2 }} />
+                            {formatTime(entry.timeElapsed)}
+                          </span>
+                        )}
+                        {" · "}{formatDate(entry.createdAt)}
                       </div>
                     </div>
 

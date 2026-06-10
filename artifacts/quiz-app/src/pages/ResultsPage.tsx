@@ -47,6 +47,7 @@ export default function ResultsPage() {
             score: state.score,
             totalQuestions: state.questions.length,
             correctAnswers: state.correctAnswers,
+            timeElapsed: state.timeElapsed,
           },
         },
         { onSuccess: () => setSubmitted(true) }
@@ -203,7 +204,7 @@ export default function ResultsPage() {
           </button>
           <button
             className="quiz-btn quiz-btn-primary flex-1"
-            onClick={() => navigate(`/quiz/${topicId}/${mode ?? "exam"}`)}
+            onClick={() => navigate(topicId === "mock" ? "/quiz/mock/exam" : `/quiz/${topicId}/${mode ?? "exam"}`)}
           >
             <RotateCcw size={15} />
             Làm lại

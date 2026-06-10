@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { allTopics } from "@/data";
-import { Terminal, Zap, Trophy, Shield, ChevronRight, BookOpen, Cpu, GraduationCap, Swords } from "lucide-react";
+import { Terminal, Zap, Trophy, Shield, ChevronRight, BookOpen, Cpu, GraduationCap, Swords, FileText } from "lucide-react";
 
 const ADMIN_NAME = "admindeptrai";
 
@@ -49,6 +49,10 @@ export default function HomePage() {
   const handleStartQuiz = () => {
     if (!selectedTopic || !selectedMode) return;
     navigate(`/quiz/${selectedTopic}/${selectedMode}`);
+  };
+
+  const handleStartMockExam = () => {
+    navigate("/quiz/mock/exam");
   };
 
   const topicIcons = ["🌐", "📡", "🔀", "⚡", "📊", "🔐"];
@@ -215,6 +219,37 @@ export default function HomePage() {
                   <span style={{ color: "var(--quiz-yellow)", fontWeight: 600 }}>{playerName}</span>!
                   Hãy chọn chủ đề để bắt đầu.
                 </p>
+
+                <motion.button
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 }}
+                  onClick={handleStartMockExam}
+                  className="w-full quiz-card-2 text-left mb-4"
+                  style={{
+                    padding: "16px 18px",
+                    cursor: "pointer",
+                    border: "2px solid rgba(249,115,22,0.5)",
+                    background: "rgba(249,115,22,0.07)",
+                    borderRadius: 10,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 14,
+                  }}
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                >
+                  <FileText size={26} style={{ color: "#f97316", flexShrink: 0 }} />
+                  <div className="flex-1">
+                    <div className="font-bold mb-0.5" style={{ color: "#f97316", fontSize: "0.95rem" }}>
+                      🎯 Thi theo đề thật — 40 câu
+                    </div>
+                    <div style={{ color: "var(--quiz-muted)", fontSize: "0.75rem", lineHeight: 1.4 }}>
+                      Đề tổng hợp theo tỷ lệ chuẩn: Chủ đề 2 (16 câu) · CĐ 3 (8 câu) · CĐ 1&amp;5 (5 câu) · CĐ 4 (4 câu) · CĐ 6 (2 câu)
+                    </div>
+                  </div>
+                  <ChevronRight size={18} style={{ color: "#f97316", flexShrink: 0 }} />
+                </motion.button>
 
                 <div className="grid gap-3 mb-6" style={{ gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))" }}>
                   {allTopics.map((topic, i) => (
