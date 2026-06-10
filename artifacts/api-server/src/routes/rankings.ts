@@ -47,6 +47,7 @@ router.post("/rankings", async (req, res) => {
         score: body.score,
         totalQuestions: body.totalQuestions,
         correctAnswers: body.correctAnswers,
+        timeElapsed: body.timeElapsed ?? null,
       })
       .returning();
 
@@ -58,6 +59,7 @@ router.post("/rankings", async (req, res) => {
       score: row.score,
       totalQuestions: row.totalQuestions,
       correctAnswers: row.correctAnswers,
+      timeElapsed: row.timeElapsed ?? undefined,
       createdAt: row.createdAt.toISOString(),
     });
   } catch (err) {
