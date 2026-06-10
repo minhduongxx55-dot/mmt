@@ -225,21 +225,34 @@ export default function LeaderboardPage() {
                         </span>
                       </div>
                       <div style={{ color: "var(--quiz-muted)", fontSize: "0.7rem", marginTop: 2 }}>
-                        {entry.correctAnswers}/{entry.totalQuestions} đúng
-                        {entry.timeElapsed != null && (
-                          <span style={{ color: "var(--quiz-yellow)", marginLeft: 6 }}>
-                            <Clock size={10} style={{ display: "inline", marginRight: 2 }} />
-                            {formatTime(entry.timeElapsed)}
-                          </span>
-                        )}
-                        {" · "}{formatDate(entry.createdAt)}
+                        {entry.correctAnswers}/{entry.totalQuestions} đúng · {formatDate(entry.createdAt)}
                       </div>
                     </div>
+
+                    {/* Time */}
+                    {entry.timeElapsed != null && (
+                      <div
+                        className="flex-shrink-0 flex flex-col items-center justify-center"
+                        style={{
+                          minWidth: 58,
+                          background: "rgba(210,153,34,0.08)",
+                          border: "1px solid rgba(210,153,34,0.25)",
+                          borderRadius: 8,
+                          padding: "4px 8px",
+                          textAlign: "center",
+                        }}
+                      >
+                        <Clock size={12} style={{ color: "var(--quiz-yellow)", marginBottom: 1 }} />
+                        <div style={{ color: "var(--quiz-yellow)", fontWeight: 700, fontSize: "0.78rem", fontFamily: "monospace", lineHeight: 1 }}>
+                          {formatTime(entry.timeElapsed)}
+                        </div>
+                      </div>
+                    )}
 
                     {/* Score */}
                     <div
                       className="font-bold text-xl flex-shrink-0"
-                      style={{ color: getScoreColor(entry.score), fontFamily: "monospace" }}
+                      style={{ color: getScoreColor(entry.score), fontFamily: "monospace", minWidth: 40, textAlign: "right" }}
                     >
                       {entry.score.toFixed(1)}
                     </div>
