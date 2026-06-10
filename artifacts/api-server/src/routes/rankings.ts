@@ -24,6 +24,7 @@ router.get("/rankings", async (req, res) => {
       score: r.score,
       totalQuestions: r.totalQuestions,
       correctAnswers: r.correctAnswers,
+      timeElapsed: r.timeElapsed ?? undefined,
       createdAt: r.createdAt.toISOString(),
     }));
 
